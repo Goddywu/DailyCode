@@ -1,0 +1,10 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,env,prometheus"
+
+spring.mongodb.uri: ${MONGO_DB}
+logging.config: 'classpath:logback-springV2.xml'
+
+redisson.open: false
