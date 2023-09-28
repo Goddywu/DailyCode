@@ -11,18 +11,18 @@ public class Main {
 
     @Data
     private static class UserScore {
-        private Long geedId;
+        private Long uid;
         private Integer score;
 
-        public UserScore(long geedId, double doubleScore) {
-            this.geedId = geedId;
+        public UserScore(long uid, double doubleScore) {
+            this.uid = uid;
             this.score = (int) Math.ceil(doubleScore); // 向上取整
         }
     }
 
     private static List<Long> randomDrawLucky(final LinkedList<UserScore> userScoreList, final int luckyNum) {
         if (userScoreList.size() <= luckyNum) {
-            return userScoreList.stream().map(UserScore::getGeedId).collect(Collectors.toList());
+            return userScoreList.stream().map(UserScore::getUid).collect(Collectors.toList());
         }
 
         List<Long> luckyGeekIds = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Main {
                 int willAddScore = next.getScore();
                 if (curSum < randomInt && randomInt <= curSum + willAddScore) {
                     iterator.remove();
-                    luckyGeekIds.add(next.getGeedId());
+                    luckyGeekIds.add(next.getUid());
                     sum -= next.getScore();
                     break;
                 }
@@ -63,7 +63,7 @@ public class Main {
 
         Set<Long> geekIds = new HashSet<>();
         for (UserScore userScore : userScoreList) {
-            geekIds.add(userScore.getGeedId());
+            geekIds.add(userScore.getUid());
             if (geekIds.size() >= luckyNum) {
                 break;
             }
