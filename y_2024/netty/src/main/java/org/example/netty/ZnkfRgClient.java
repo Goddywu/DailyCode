@@ -53,7 +53,7 @@ public class ZnkfRgClient {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(new NioEventLoopGroup());
         bootstrap.channel(NioSocketChannel.class);
