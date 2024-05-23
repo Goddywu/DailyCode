@@ -1,0 +1,16 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,env,prometheus"
+
+nacos:
+  server-addr: '192.168.21.121:8848,192.168.21.122:8848,192.168.21.219:8848'
+  username: 'nacos'
+  password: 'He51d4qGaLzs5PVGxoiGQbr7I4azqQzR'
+  namespace: 'tyche'
+
+spring.mongodb.uri: ${MONGO_DB}
+logging.config: 'classpath:logback-springV2.xml'
+
+redisson.open: false
