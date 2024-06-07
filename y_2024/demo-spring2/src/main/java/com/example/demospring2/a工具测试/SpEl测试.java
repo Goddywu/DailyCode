@@ -1,7 +1,11 @@
 package com.example.demospring2.a工具测试;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.context.expression.MapAccessor;
+import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -41,22 +45,93 @@ public class SpEl测试 {
 
     public static void test3() {
         SpelExpressionParser parser = new SpelExpressionParser();
-        Expression expression = parser.parseExpression("aa is #{num[1]}", new TemplateParserContext());
-        Object paramObj = new Object() {
-          public int[] getNum() {
-              return new int[]{0,1};
-          }
-        };
-        Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("num", new int[]{0,1});
-        System.out.println(expression.getValue(paramObj));
+        Expression expression = parser.parseExpression("aa is #{#num[1]}", new TemplateParserContext());
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("num", new int[]{0,1});
+        System.out.println(expression.getValue(context));
 
         System.out.println("------end 3-------");
+    }
+
+    public static void test4() {
+        SpelExpressionParser parser = new SpelExpressionParser();
+        Expression expression = parser.parseExpression("aa is #{num[1]}", new TemplateParserContext());
+        Object paramObj = new Object() {
+            public int[] num() { // 或者 getNum()
+                return new int[]{0,1};
+            }
+        };
+        System.out.println(expression.getValue(paramObj));
+
+        System.out.println("------end 4-------");
+    }
+
+    public static void test5() {
+        JSONObject json = new JSONObject();
+        json.put("name", "John");
+        json.put("age", 30);
+        ExpressionParser parser = new SpelExpressionParser();
+        StandardEvaluationContext context = new StandardEvaluationContext(json);
+        context.addPropertyAccessor(new MapAccessor());
+        System.out.println(parser.parseExpression("name").getValue(context, String.class));
+
+        System.out.println("------end 5-------");
+    }
+
+    public static void test6() {
+        ExpressionParser parser = new SpelExpressionParser();
+
+        Expression expression = parser.parseExpression("aa is #{num[1] + 20}", new TemplateParserContext());
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.addPropertyAccessor(new MapAccessor());
+        JSONObject jsonObject = new JSONObject().fluentPut("num", new int[]{0,1});
+        context.setRootObject(jsonObject);
+        System.out.println(expression.getValue(context));
+
+        System.out.println("------end 6-------");
+    }
+
+    public static void test7() {
+        ExpressionParser parser = new SpelExpressionParser();
+
+        Expression expression = parser.parseExpression("aa is #{num[1] + 20}", new TemplateParserContext());
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.addPropertyAccessor(new MapAccessor());
+        Map<String, Object> objectMap = new HashMap<>();
+        objectMap.put("num", new int[]{0,1});
+        context.setRootObject(objectMap);
+        System.out.println(expression.getValue(context));
+
+        System.out.println("------end 7-------");
+    }
+
+    public static void test8() {
+        ExpressionParser parser = new SpelExpressionParser();
+
+        Expression expression = parser.parseExpression("[#{num[0]},#{num[1]}]", new TemplateParserContext());
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+//        context.setVariable("num", new int[]{0,1});
+        context.addPropertyAccessor(new MapAccessor());
+        Map<String, Object> objectMap = new HashMap<>();
+        objectMap.put("num", new int[]{0,1});
+        context.setRootObject(objectMap);
+        System.out.println(expression.getValue(context));
+
+        System.out.println("------end 8-------");
     }
 
     public static void main(String[] args) {
         test1();
         test2();
         test3();
+        test4();
+        test5();
+        test6();
+        test7();
+        test8();
     }
+
 }
