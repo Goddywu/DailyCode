@@ -1,4 +1,4 @@
-package com.example.demospring2.a题;
+package com.example.demospring2.a学习;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
