@@ -4,6 +4,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Goddy <wuchuansheng@kanzhun.com> 2024-06-12
+ * https://pdai.tech/md/java/thread/java-thread-x-lock-ReentrantLock.html
  */
 public class t9_ReentrantLock使用 {
 
@@ -26,7 +27,32 @@ public class t9_ReentrantLock使用 {
         }
     }
 
+    private static class Counter {
+        private static int counter = 0;
+        private static ReentrantLock lock = new ReentrantLock();
+
+        public static int getCounter() {
+            return counter;
+        }
+
+        public static void increase() {
+            try {
+                lock.lock();
+                counter++;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    private static void method2() {
+
+
+    }
+
     public static void main(String[] args) {
         method1();
+
+        method2();
     }
 }
