@@ -48,7 +48,7 @@ public class t11_排序 {
             nums[r] = nums[l];
         }
         nums[l] = base;
-        quickSort(nums, left, l -1);
+        quickSort(nums, left, l - 1);
         quickSort(nums, l + 1, right);
     }
 
@@ -100,10 +100,50 @@ public class t11_排序 {
      * 对于n个待排序的数列，取一个小于n的整数gap(gap被称为步长)将待排序元素分成若干个组子序列，所有距离为gap的倍数的记录放在同一个组中；
      * 然后，对各组内的元素进行直接插入排序。这一趟排序完成之后，每一个组的元素都是有序的。
      * 然后减小gap的值，并重复执行上述的分组和排序。重复这样的操作，当gap=1时，整个数列就是有序的
+     * 1. 把所有数据分成n组，一般是总数/2组
+     * 2. 组内走插入排序
+     * 3. 把所有数据重新分为n/2组，排序，直至所有数据分为1组
      */
     private static void shellSort(int[] nums) {
 
     }
+
+    /**
+     * 堆排序
+     * 堆排序是指利用堆这种数据结构所设计的一种排序算法。
+     * 堆是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点
+     */
+    private static void heapSort(int[] nums) {
+
+    }
+
+    /**
+     * 归并排序
+     * 将两个的有序数列合并成一个有序数列
+     *
+     */
+    private static void mergeSort(int[] nums) {
+
+    }
+
+    /**
+     * 桶排序
+     * 将数组分到有限数量的桶子里。每个桶子再个别排序
+     */
+    private static void buketSort(int[] nums) {
+
+    }
+
+    /**
+     * 基数排序
+     * 将整数按位数切割成不同的数字，然后按每个位数分别比较。
+     * 具体做法是: 将所有待比较数值统一为同样的数位长度，数位较短的数前面补零。
+     * 然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列
+     */
+    private static void radixSort(int[] nums) {
+
+    }
+
 
     private static int[] copyArray(int[] nums) {
         return Arrays.copyOf(nums, nums.length);
@@ -118,7 +158,8 @@ public class t11_排序 {
 
     public static void main(String[] args) {
         int[][] numsArray = new int[][]{
-                {2, 3, 5, 4, 1, 6, 9, 8, 7}
+                {2, 3, 5, 4, 1, 6, 9, 8, 7},
+                {7, 3, 5, 4, 1, 6, 9, 8, 7, 2, 3, 1}
         };
 
         for (int[] nums : numsArray) {
@@ -143,6 +184,22 @@ public class t11_排序 {
             copy = copyArray(nums);
             shellSort(copy);
             System.out.println("希尔排序：" + Arrays.toString(copy));
+
+            copy = copyArray(nums);
+            heapSort(copy);
+            System.out.println("堆排序：" + Arrays.toString(copy));
+
+            copy = copyArray(nums);
+            mergeSort(copy);
+            System.out.println("归并排序：" + Arrays.toString(copy));
+
+            copy = copyArray(nums);
+            buketSort(copy);
+            System.out.println("桶排序：" + Arrays.toString(copy));
+
+            copy = copyArray(nums);
+            radixSort(copy);
+            System.out.println("基数排序：" + Arrays.toString(copy));
 
         }
     }
